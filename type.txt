@@ -1,0 +1,1 @@
+make_transform_range(const boost::iterator_range<boost::counting_iterator<unsigned int, boost::use_default, boost::use_default> >&, std::pointer_to_unary_function<const unsigned int&, std::pair<unsigned int, unsigned int> >)
