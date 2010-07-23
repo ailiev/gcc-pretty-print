@@ -10,7 +10,9 @@ import Text.PrettyPrint ((<>), (<+>), ($$))
 
 import qualified Debug.Trace as Tr
 
-import SashoLib
+import IlievUtils.Misc                  hiding (iterateList)
+
+import qualified IlievUtils.Parsec      as Parsec
 
 
 data FuncDef = FuncDef { qual      :: [Type], -- a qualified type
@@ -89,7 +91,7 @@ data ExpandedTemplate = ExpTempl
                                 [(String,Type)]
 
 
-expandedTemplateParser = do (rettype,def)   <- funcDefParser `withOptionalPrefix` typeParser
+expandedTemplateParser = do (rettype,def)   <- funcDefParser `Parsec.withOptionalPrefix` typeParser
                             paramvals       <- brackets (do symbol "with"
                                                             paramValParser `sepBy` comma)
                             return $ ExpTempl rettype def paramvals
@@ -121,7 +123,7 @@ typeParser              = (try funcParser) <|> postfixTypeParser
 
 funcParser              = do ret     <- postfixTypeParser
                              name    <- parens (do (reservedOp "*" <|> reservedOp "&" <|> return ())
-                                                   maybeParse identifier)
+                                                   Parsec.maybeParse identifier)
                                                  <?> "function type: name"
                              params  <- parens (typeParser `sepBy` comma)
                                                  <?> "function type: argument types"
@@ -180,7 +182,7 @@ templParser              = do tempName <- identifier
 voidParser               = do reserved "void"
                               return Void
 literalParser            = do i <- decimal >>== fromInteger
-                              u <- maybeParse $ symbol "u"
+                              u <- Parsec.maybeParse $ symbol "u"
                               return $ if isNothing u
                                        then LitInt i
                                        else LitUnsigned i
