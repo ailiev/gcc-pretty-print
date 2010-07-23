@@ -1,0 +1,17 @@
+Name:                gcc-pretty-print
+Version:             0.1.0
+Description:         Pretty printer for types reported by g++
+License:             BSD
+License-file:        LICENSE
+Author:              Alexander Iliev
+Maintainer:          alex DOT iliev AT gmail DOT com
+Build-Type:          Simple
+Cabal-Version:       >=1.2
+
+Executable gcc-pretty-print
+  Main-is:           FuncDef.hs
+  Build-Depends:     ilievutils,
+                     haskell98,
+                     base >= 3 && < 5,
+                     parsec,
+                     pretty
