@@ -5,6 +5,11 @@
 The types reported in error messages produced by g++ can be inscrutable. This
 tool will pretty-print those types to make their structure much clearer.
 
+## Dependencies
+
+Requires my [Haskell utils package](http://github.com/ailiev/haskell-utils).
+You can build and install it with cabal, and then build this one.
+
 ## Examples
 
 ### Input
